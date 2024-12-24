@@ -63,30 +63,30 @@ export default function Home() {
       .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
   }, []);
 
-  useEffect(() => {
-    if (
-      !dateUpdatedFlag &&
-      !legislatorsIsPending &&
-      !newBillsIsPending &&
-      !oldBillsIsPending
-    ) {
-      console.log(
-        "we somehow got in here: ",
-        dateUpdatedFlag,
-        newBillsIsPending,
-        oldBillsIsPending,
-        legislatorsIsPending
-      );
-      dateUpdatedFlag = true;
-      // save the date by submitting date form
-      let dateForm = document.getElementById("updateDate");
-      // data.set("updated", dateFormatter.format(d));
-      // data.set("updated_ms", d.getTime());
-      dateForm.dispatchEvent(
-        new Event("submit", { bubbles: true, cancelable: true })
-      );
-    }
-  }, [legislatorsIsPending, newBillsIsPending, oldBillsIsPending]);
+  // useEffect(() => {
+  //   if (
+  //     !dateUpdatedFlag &&
+  //     !legislatorsIsPending &&
+  //     !newBillsIsPending &&
+  //     !oldBillsIsPending
+  //   ) {
+  //     console.log(
+  //       "we somehow got in here: ",
+  //       dateUpdatedFlag,
+  //       newBillsIsPending,
+  //       oldBillsIsPending,
+  //       legislatorsIsPending
+  //     );
+  //     dateUpdatedFlag = true;
+  //     // save the date by submitting date form
+  //     let dateForm = document.getElementById("updateDate");
+  //     // data.set("updated", dateFormatter.format(d));
+  //     // data.set("updated_ms", d.getTime());
+  //     dateForm.dispatchEvent(
+  //       new Event("submit", { bubbles: true, cancelable: true })
+  //     );
+  //   }
+  // }, [legislatorsIsPending, newBillsIsPending, oldBillsIsPending]);
 
   // if (sheetName == "legislators") {
   //    let d = new Date();
