@@ -3,7 +3,7 @@ import { useState, useActionState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Image from "next/image";
 import styles from "./page.module.css";
-import getSheetData from "@/helper/process-sheet";
+import { getSheetData, saveData } from "@/helper/process-sheet";
 
 export default function Home() {
   const [newBillsMessage, newBillsAction, newBillsIsPending] = useActionState(
@@ -18,6 +18,17 @@ export default function Home() {
 
   const [legislatorsMessage, legislatorsAction, legislatorsIsPending] =
     useActionState(getSheetData, null);
+
+  const dateFormatter = new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZoneName: "short",
+    hour12: true,
+    hour: "numeric",
+    minute: "numeric",
+  });
 
   const newBillsCutoffDate = () => {
     //return a date formatted '2021-08-1' to use in SQL query
@@ -45,6 +56,18 @@ export default function Home() {
       .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
   }, []);
 
+  // if (sheetName == "legislators") {
+  //    let d = new Date();
+  //   saveData("updated", { updated: dateFormatter.format(d), updated_ms: d.getTime });
+  // }
+  function updatedDate() {
+    // save the date and return it in human-readable format
+    let d = new Date();
+    let human = dateFormatter.format(d);
+    saveData("updated", { updated: human, updated_ms: d.getTime() });
+    return human;
+  }
+
   return (
     <div>
       {/* get new bills */}
@@ -59,7 +82,7 @@ export default function Home() {
         <input
           type="hidden"
           name="responseMessage"
-          value="new bills updated!"
+          value="new bills updated ✔"
         />
         <h4>
           {newBillsIsPending ? "updating newer bills..." : newBillsMessage}
@@ -78,7 +101,7 @@ export default function Home() {
         <input
           type="hidden"
           name="responseMessage"
-          value="old bills updated!"
+          value="old bills updated ✔"
         />
         <h4>
           {oldBillsIsPending ? "updating older bills..." : oldBillsMessage}
@@ -93,7 +116,7 @@ export default function Home() {
         <input
           type="hidden"
           name="responseMessage"
-          value="legislators updated!"
+          value="legislators updated ✔"
         />
         <h4>
           {legislatorsIsPending
@@ -101,6 +124,9 @@ export default function Home() {
             : legislatorsMessage}
         </h4>
       </form>
+      {!legislatorsIsPending && !newBillsIsPending && !oldBillsIsPending
+        ? updatedDate()
+        : ""}
     </div>
   );
 }

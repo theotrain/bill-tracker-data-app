@@ -1,7 +1,7 @@
 "use server";
 const fs = require("fs");
 
-function saveData(file, data) {
+export async function saveData(file, data) {
   // "public/data/bills1.json"
   // console.log("SAVE DATA ------------------->");
   file = "public/data/" + file + ".json";
@@ -10,17 +10,6 @@ function saveData(file, data) {
   fs.writeFileSync(file, JSON.stringify(data));
   // fs.writeFileSync(file, JSON.stringify(data, null, 4));
 }
-
-var dateFormatter = new Intl.DateTimeFormat("en-US", {
-  weekday: "long",
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-  timeZoneName: "short",
-  hour12: true,
-  hour: "numeric",
-  minute: "numeric",
-});
 
 const responseToObjects = (res) => {
   const jsData = JSON.parse(res.substring(47).slice(0, -2));
@@ -52,7 +41,7 @@ const responseToObjects = (res) => {
 };
 
 // export const getSheetData = ({ sheetName, query, callback }) => {
-export default async function getSheetData(prevState, formData) {
+export async function getSheetData(prevState, formData) {
   // if (sheetName == "bills") {
   //   sheetName = "owen temp copy";
   // }
@@ -72,10 +61,6 @@ export default async function getSheetData(prevState, formData) {
     .then((response) => {
       saveData(fileName, responseToObjects(response));
     });
-
-  if (sheetName == "legislators") {
-    saveData("updated", { updated: dateFormatter.format(new Date()) });
-  }
 
   return responseMessage;
 }
