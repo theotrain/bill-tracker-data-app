@@ -62,5 +62,9 @@ export default async function getSheetData(prevState, formData) {
       saveData(fileName, responseToObjects(response));
     });
 
+  if (sheetName == "legislators") {
+    saveData("updated", new Date());
+  }
+
   return responseMessage;
 }
