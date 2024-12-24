@@ -74,7 +74,7 @@ export default async function getSheetData(prevState, formData) {
     });
 
   if (sheetName == "legislators") {
-    saveData("updated", dateFormatter.format(new Date()));
+    saveData("updated", { updated: dateFormatter.format(new Date()) });
   }
 
   return responseMessage;
