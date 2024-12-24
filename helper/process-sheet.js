@@ -11,6 +11,17 @@ function saveData(file, data) {
   // fs.writeFileSync(file, JSON.stringify(data, null, 4));
 }
 
+var dateFormatter = new Intl.DateTimeFormat("en-US", {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZoneName: "short",
+  hour12: true,
+  hour: "numeric",
+  minute: "numeric",
+});
+
 const responseToObjects = (res) => {
   const jsData = JSON.parse(res.substring(47).slice(0, -2));
   let data = [];
@@ -63,7 +74,7 @@ export default async function getSheetData(prevState, formData) {
     });
 
   if (sheetName == "legislators") {
-    saveData("updated", new Date());
+    saveData("updated", dateFormatter.format(new Date()));
   }
 
   return responseMessage;

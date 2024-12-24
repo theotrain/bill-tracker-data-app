@@ -3,9 +3,7 @@ import { useState, useActionState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Image from "next/image";
 import styles from "./page.module.css";
-// const fs = require("fs");
 import getSheetData from "@/helper/process-sheet";
-// import doThing from "./test-server";
 
 export default function Home() {
   const [newBillsMessage, newBillsAction, newBillsIsPending] = useActionState(
@@ -63,7 +61,9 @@ export default function Home() {
           name="responseMessage"
           value="new bills updated!"
         />
-        {newBillsIsPending ? "updating newer bills..." : newBillsMessage}
+        <h4>
+          {newBillsIsPending ? "updating newer bills..." : newBillsMessage}
+        </h4>
       </form>
 
       {/* get old bills */}
@@ -80,7 +80,9 @@ export default function Home() {
           name="responseMessage"
           value="old bills updated!"
         />
-        {oldBillsIsPending ? "updating older bills..." : oldBillsMessage}
+        <h4>
+          {oldBillsIsPending ? "updating older bills..." : oldBillsMessage}
+        </h4>
       </form>
 
       {/* get legislators */}
@@ -93,7 +95,11 @@ export default function Home() {
           name="responseMessage"
           value="legislators updated!"
         />
-        {legislatorsIsPending ? "updating legislators..." : legislatorsMessage}
+        <h4>
+          {legislatorsIsPending
+            ? "updating legislators..."
+            : legislatorsMessage}
+        </h4>
       </form>
     </div>
   );
