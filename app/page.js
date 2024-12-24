@@ -3,7 +3,7 @@ import { useState, useActionState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Image from "next/image";
 import styles from "./page.module.css";
-import { getSheetData, saveData } from "@/helper/process-sheet";
+import { getSheetData, updateDate } from "@/helper/process-sheet";
 
 export default function Home() {
   const [newBillsMessage, newBillsAction, newBillsIsPending] = useActionState(
@@ -18,6 +18,13 @@ export default function Home() {
 
   const [legislatorsMessage, legislatorsAction, legislatorsIsPending] =
     useActionState(getSheetData, null);
+
+  const [updateDateMessage, updateDateAction, updateDateIsPending] =
+    useActionState(updateDate, null);
+
+  let dateUpdatedFlag = false;
+  // let data = new FormData(dateForm);
+  let d = new Date();
 
   const dateFormatter = new Intl.DateTimeFormat("en-US", {
     weekday: "long",
@@ -56,17 +63,41 @@ export default function Home() {
       .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
   }, []);
 
+  useEffect(() => {
+    if (
+      !dateUpdatedFlag &&
+      !legislatorsIsPending &&
+      !newBillsIsPending &&
+      !oldBillsIsPending
+    ) {
+      console.log(
+        "we somehow got in here: ",
+        dateUpdatedFlag,
+        newBillsIsPending,
+        oldBillsIsPending,
+        legislatorsIsPending
+      );
+      dateUpdatedFlag = true;
+      // save the date by submitting date form
+      let dateForm = document.getElementById("updateDate");
+      // data.set("updated", dateFormatter.format(d));
+      // data.set("updated_ms", d.getTime());
+      dateForm.dispatchEvent(
+        new Event("submit", { bubbles: true, cancelable: true })
+      );
+    }
+  }, [legislatorsIsPending, newBillsIsPending, oldBillsIsPending]);
+
   // if (sheetName == "legislators") {
   //    let d = new Date();
   //   saveData("updated", { updated: dateFormatter.format(d), updated_ms: d.getTime });
   // }
-  function updatedDate() {
-    // save the date and return it in human-readable format
-    let d = new Date();
-    let human = dateFormatter.format(d);
-    saveData("updated", { updated: human, updated_ms: d.getTime() });
-    return human;
-  }
+  // function updatedDate() {
+  //   // save the date and return it in human-readable format
+  //   let d = new Date();
+  //   let human = dateFormatter.format(d);
+  //   return human;
+  // }
 
   return (
     <div>
@@ -124,9 +155,14 @@ export default function Home() {
             : legislatorsMessage}
         </h4>
       </form>
-      {!legislatorsIsPending && !newBillsIsPending && !oldBillsIsPending
-        ? updatedDate()
-        : ""}
+
+      {/* update date */}
+      <form action={updateDateAction} id="updateDate">
+        <input type="hidden" name="fileName" value="updated" />
+        <input type="hidden" name="updated" value={dateFormatter.format(d)} />
+        <input type="hidden" name="updated_ms" value={d.getTime()} />
+        <p>{updateDateIsPending ? "" : updateDateMessage}</p>
+      </form>
     </div>
   );
 }

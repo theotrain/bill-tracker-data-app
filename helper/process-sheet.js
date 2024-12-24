@@ -1,7 +1,7 @@
 "use server";
 const fs = require("fs");
 
-export async function saveData(file, data) {
+function saveData(file, data) {
   // "public/data/bills1.json"
   // console.log("SAVE DATA ------------------->");
   file = "public/data/" + file + ".json";
@@ -39,6 +39,15 @@ const responseToObjects = (res) => {
   }
   return data;
 };
+
+export async function updateDate(prevState, formData) {
+  const updated = formData.get("updated");
+  const updated_ms = formData.get("updated_ms");
+  const fileName = formData.get("fileName");
+  const responseMessage = formData.get("responseMessage");
+  saveData(fileName, { updated: updated, updated_ms: updated_ms });
+  return updated;
+}
 
 // export const getSheetData = ({ sheetName, query, callback }) => {
 export async function getSheetData(prevState, formData) {
