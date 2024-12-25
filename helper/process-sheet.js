@@ -3,7 +3,7 @@ const fs = require("fs");
 
 function saveData(file, data) {
   // "public/data/bills1.json"
-  // console.log("SAVE DATA ------------------->");
+  console.log("SAVE DATA ------------------->", file);
   file = "public/data/" + file + ".json";
   // console.log("file: ", file);
   // console.log("data: ", data);

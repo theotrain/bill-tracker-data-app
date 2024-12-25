@@ -63,30 +63,30 @@ export default function Home() {
       .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
   }, []);
 
-  // useEffect(() => {
-  //   if (
-  //     !dateUpdatedFlag &&
-  //     !legislatorsIsPending &&
-  //     !newBillsIsPending &&
-  //     !oldBillsIsPending
-  //   ) {
-  //     console.log(
-  //       "we somehow got in here: ",
-  //       dateUpdatedFlag,
-  //       newBillsIsPending,
-  //       oldBillsIsPending,
-  //       legislatorsIsPending
-  //     );
-  //     dateUpdatedFlag = true;
-  //     // save the date by submitting date form
-  //     let dateForm = document.getElementById("updateDate");
-  //     // data.set("updated", dateFormatter.format(d));
-  //     // data.set("updated_ms", d.getTime());
-  //     dateForm.dispatchEvent(
-  //       new Event("submit", { bubbles: true, cancelable: true })
-  //     );
-  //   }
-  // }, [legislatorsIsPending, newBillsIsPending, oldBillsIsPending]);
+  useEffect(() => {
+    if (
+      !dateUpdatedFlag &&
+      !legislatorsIsPending &&
+      !newBillsIsPending &&
+      !oldBillsIsPending
+    ) {
+      console.log(
+        "we somehow got in here: ",
+        dateUpdatedFlag,
+        newBillsIsPending,
+        oldBillsIsPending,
+        legislatorsIsPending
+      );
+      dateUpdatedFlag = true;
+      // save the date by submitting date form
+      let dateForm = document.getElementById("updateDate");
+      // data.set("updated", dateFormatter.format(d));
+      // data.set("updated_ms", d.getTime());
+      dateForm.dispatchEvent(
+        new Event("submit", { bubbles: true, cancelable: true })
+      );
+    }
+  }, [legislatorsIsPending, newBillsIsPending, oldBillsIsPending]);
 
   // if (sheetName == "legislators") {
   //    let d = new Date();
@@ -161,7 +161,9 @@ export default function Home() {
         <input type="hidden" name="fileName" value="updated" />
         <input type="hidden" name="updated" value={dateFormatter.format(d)} />
         <input type="hidden" name="updated_ms" value={d.getTime()} />
-        <p>{updateDateIsPending ? "" : updateDateMessage}</p>
+        <p style={{ color: "grey" }}>
+          {updateDateIsPending ? "" : updateDateMessage}
+        </p>
       </form>
     </div>
   );
