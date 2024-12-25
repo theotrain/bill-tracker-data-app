@@ -1,15 +1,18 @@
 "use server";
 const fs = require("fs");
+import { put } from "@vercel/blob";
 
 function saveData(file, data) {
   // "public/data/bills1.json"
-  console.log("SAVE DATA ------------------->", file);
-  file = "./data/" + file + ".json";
-  // console.log("file: ", file);
-  // console.log("data: ", data);
-  fs.writeFileSync(file, JSON.stringify(data));
-  // fs.writeFileSync(file, JSON.stringify(data, null, 4));
+  const blob = put(file + ".json", data, {
+    access: "public",
+  });
 }
+
+// function saveData(file, data) {
+//   file = "./public/data/" + file + ".json";
+//   fs.writeFileSync(file, JSON.stringify(data));
+// }
 
 const responseToObjects = (res) => {
   const jsData = JSON.parse(res.substring(47).slice(0, -2));
