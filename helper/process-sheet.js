@@ -4,8 +4,13 @@ import { put } from "@vercel/blob";
 
 function saveData(file, data) {
   // "public/data/bills1.json"
-  const blob = put(file + ".json", data, {
+  // console.log('writing data to blob: ', data)
+  // if (file == "bills1") {
+  //   file = "bills1-8HtSN3AxmvP0Z0mfRvyN2rwUc60xpP";
+  // }
+  const blob = put(file + ".json", JSON.stringify(data), {
     access: "public",
+    addRandomSuffix: false,
   });
 }
 
