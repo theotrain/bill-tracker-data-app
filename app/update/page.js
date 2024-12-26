@@ -70,13 +70,6 @@ export default function Home() {
       !newBillsIsPending &&
       !oldBillsIsPending
     ) {
-      console.log(
-        "we somehow got in here: ",
-        dateUpdatedFlag,
-        newBillsIsPending,
-        oldBillsIsPending,
-        legislatorsIsPending
-      );
       dateUpdatedFlag = true;
       // save the date by submitting date form
       let dateForm = document.getElementById("updateDate");
@@ -87,17 +80,6 @@ export default function Home() {
       );
     }
   }, [legislatorsIsPending, newBillsIsPending, oldBillsIsPending]);
-
-  // if (sheetName == "legislators") {
-  //    let d = new Date();
-  //   saveData("updated", { updated: dateFormatter.format(d), updated_ms: d.getTime });
-  // }
-  // function updatedDate() {
-  //   // save the date and return it in human-readable format
-  //   let d = new Date();
-  //   let human = dateFormatter.format(d);
-  //   return human;
-  // }
 
   return (
     <div>

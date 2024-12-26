@@ -1,13 +1,8 @@
 "use server";
-const fs = require("fs");
+// const fs = require("fs");
 import { put } from "@vercel/blob";
 
 function saveData(file, data) {
-  // "public/data/bills1.json"
-  // console.log('writing data to blob: ', data)
-  // if (file == "bills1") {
-  //   file = "bills1-8HtSN3AxmvP0Z0mfRvyN2rwUc60xpP";
-  // }
   const blob = put(file + ".json", JSON.stringify(data), {
     access: "public",
     addRandomSuffix: false,
@@ -59,10 +54,6 @@ export async function updateDate(prevState, formData) {
 
 // export const getSheetData = ({ sheetName, query, callback }) => {
 export async function getSheetData(prevState, formData) {
-  // if (sheetName == "bills") {
-  //   sheetName = "owen temp copy";
-  // }
-
   const sheetName = formData.get("sheetName");
   const query = formData.get("query");
   const fileName = formData.get("fileName");
