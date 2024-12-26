@@ -2,8 +2,8 @@
 // const fs = require("fs");
 import { put } from "@vercel/blob";
 
-function saveData(file, data) {
-  const blob = put(file + ".json", JSON.stringify(data), {
+async function saveData(file, data) {
+  const blob = await put(file + ".json", JSON.stringify(data), {
     access: "public",
     addRandomSuffix: false,
     cacheControlMaxAge: 20,
