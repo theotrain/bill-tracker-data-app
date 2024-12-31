@@ -3,6 +3,7 @@
 import { put } from "@vercel/blob";
 
 function saveData(file, data) {
+  console.log("SAVING:", file);
   const blob = put(file + ".json", JSON.stringify(data), {
     access: "public",
     addRandomSuffix: false,
