@@ -49,6 +49,7 @@ export async function updateDate(prevState, formData) {
   const updated_ms = formData.get("updated_ms");
   const fileName = formData.get("fileName");
   const responseMessage = formData.get("responseMessage");
+  console.log("about to save the date");
   saveData(fileName, { updated: updated, updated_ms: updated_ms });
   return updated;
 }
@@ -68,6 +69,7 @@ export async function getSheetData(prevState, formData) {
   fetch(url)
     .then((res) => res.text())
     .then((response) => {
+      console.log("about to save the non-date");
       saveData(fileName, responseToObjects(response));
     });
 
