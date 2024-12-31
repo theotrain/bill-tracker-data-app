@@ -22,7 +22,11 @@ export default function Home() {
   const [updateDateMessage, updateDateAction, updateDateIsPending] =
     useActionState(updateDate, null);
 
-  let dateUpdatedFlag = false;
+  // let dateUpdatedFlag = false;
+  let [dateUpdatedFlag, setDateUpdatedFlag] = useState(false);
+  let [newBillsCount, setNewBillsCount] = useState(0);
+  let [oldBillsCount, setOldBillsCount] = useState(0);
+  let [legsCount, setLegsCount] = useState(0);
   // let data = new FormData(dateForm);
   let d = new Date();
 
@@ -53,24 +57,41 @@ export default function Home() {
     document
       .getElementById("newBills")
       .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
-
-    document
-      .getElementById("oldBills")
-      .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
-
-    document
-      .getElementById("legislators")
-      .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
   }, []);
 
   useEffect(() => {
+    if (newBillsCount == 2) {
+      // new bills complete, submit old bills
+      document
+        .getElementById("oldBills")
+        .dispatchEvent(
+          new Event("submit", { bubbles: true, cancelable: true })
+        );
+    }
+    setNewBillsCount(newBillsCount + 1);
+  }, [newBillsIsPending]);
+
+  useEffect(() => {
+    if (oldBillsCount == 2) {
+      // old bills complete, submit legislators
+      document
+        .getElementById("legislators")
+        .dispatchEvent(
+          new Event("submit", { bubbles: true, cancelable: true })
+        );
+    }
+    setOldBillsCount(oldBillsCount + 1);
+  }, [oldBillsIsPending]);
+
+  useEffect(() => {
+    // console.log("how much?");
     if (
       !dateUpdatedFlag &&
       !legislatorsIsPending &&
       !newBillsIsPending &&
       !oldBillsIsPending
     ) {
-      dateUpdatedFlag = true;
+      setDateUpdatedFlag(true);
       // save the date by submitting date form
       let dateForm = document.getElementById("updateDate");
       // data.set("updated", dateFormatter.format(d));
