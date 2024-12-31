@@ -66,7 +66,7 @@ export async function getSheetData(prevState, formData) {
   const url = `${base}&sheet=${sheetName}&tq=${encodeURIComponent(query)}`;
   const data = [];
 
-  fetch(url)
+  await fetch(url)
     .then((res) => res.text())
     .then((response) => {
       console.log("about to save the non-date");
