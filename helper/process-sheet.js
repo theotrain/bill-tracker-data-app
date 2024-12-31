@@ -1,5 +1,4 @@
 "use server";
-// const fs = require("fs");
 import { put } from "@vercel/blob";
 
 function saveData(file, data) {
@@ -10,11 +9,6 @@ function saveData(file, data) {
     cacheControlMaxAge: 20,
   });
 }
-
-// function saveData(file, data) {
-//   file = "./public/data/" + file + ".json";
-//   fs.writeFileSync(file, JSON.stringify(data));
-// }
 
 const responseToObjects = (res) => {
   const jsData = JSON.parse(res.substring(47).slice(0, -2));
@@ -50,12 +44,11 @@ export async function updateDate(prevState, formData) {
   const updated_ms = formData.get("updated_ms");
   const fileName = formData.get("fileName");
   const responseMessage = formData.get("responseMessage");
-  console.log("about to save the date");
+  // console.log("about to save the date");
   saveData(fileName, { updated: updated, updated_ms: updated_ms });
   return updated;
 }
 
-// export const getSheetData = ({ sheetName, query, callback }) => {
 export async function getSheetData(prevState, formData) {
   const sheetName = formData.get("sheetName");
   const query = formData.get("query");
@@ -70,7 +63,7 @@ export async function getSheetData(prevState, formData) {
   await fetch(url)
     .then((res) => res.text())
     .then((response) => {
-      console.log("about to save the non-date");
+      // console.log("about to save the non-date");
       saveData(fileName, responseToObjects(response));
     });
 

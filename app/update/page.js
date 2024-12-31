@@ -23,7 +23,7 @@ export default function Home() {
     useActionState(updateDate, null);
 
   // let dateUpdatedFlag = false;
-  let [dateUpdatedFlag, setDateUpdatedFlag] = useState(false);
+  // let [dateUpdatedFlag, setDateUpdatedFlag] = useState(false);
   let [newBillsCount, setNewBillsCount] = useState(0);
   let [oldBillsCount, setOldBillsCount] = useState(0);
   let [legsCount, setLegsCount] = useState(0);
@@ -53,7 +53,7 @@ export default function Home() {
   const cutoffDateString = newBillsCutoffDate();
 
   useEffect(() => {
-    // SUBMIT ALL FORMS
+    // SUBMIT NEW BILLS
     document
       .getElementById("newBills")
       .dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
@@ -84,23 +84,15 @@ export default function Home() {
   }, [oldBillsIsPending]);
 
   useEffect(() => {
-    // console.log("how much?");
-    if (
-      !dateUpdatedFlag &&
-      !legislatorsIsPending &&
-      !newBillsIsPending &&
-      !oldBillsIsPending
-    ) {
-      setDateUpdatedFlag(true);
-      // save the date by submitting date form
+    if (legsCount == 2) {
+      // legislators complete, update date
       let dateForm = document.getElementById("updateDate");
-      // data.set("updated", dateFormatter.format(d));
-      // data.set("updated_ms", d.getTime());
       dateForm.dispatchEvent(
         new Event("submit", { bubbles: true, cancelable: true })
       );
     }
-  }, [legislatorsIsPending, newBillsIsPending, oldBillsIsPending]);
+    setLegsCount(legsCount + 1);
+  }, [legislatorsIsPending]);
 
   return (
     <div>
