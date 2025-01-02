@@ -8,7 +8,7 @@ import { waitUntil } from "@vercel/functions";
 //   return result;
 // }
 
-export function GET(request) {
+export function GET() {
   // waitUntil(connect()));
   waitUntil(fetch("https://bill-tracker-data-app.vercel.app/update"));
   return new Response(`Hello from owen`);
