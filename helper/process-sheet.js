@@ -39,6 +39,10 @@ const responseToObjects = (res) => {
   return data;
 };
 
+export function connect() {
+  return "we got to the helper file!";
+}
+
 export async function updateDate(prevState, formData) {
   const updated = formData.get("updated");
   const updated_ms = formData.get("updated_ms");
