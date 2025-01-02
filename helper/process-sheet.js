@@ -39,7 +39,7 @@ const responseToObjects = (res) => {
   return data;
 };
 
-export function connect() {
+export async function connect() {
   return "we got to the helper file!";
 }
 
