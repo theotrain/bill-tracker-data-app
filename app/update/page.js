@@ -47,7 +47,9 @@ export default function Home() {
     var millisecondsInNineMonths = 365 * 1.5 * millisecondsPerDay;
     var today = new Date();
     var cutoffDate = new Date(today.getTime() - millisecondsInNineMonths);
-    return `${cutoffDate.getFullYear()}-${cutoffDate.getMonth()}-${cutoffDate.getDate()}`;
+    return `${cutoffDate.getFullYear()}-${cutoffDate.toLocaleString("default", {
+      month: "2-digit",
+    })}-${cutoffDate.getDate()}`;
   };
 
   const cutoffDateString = newBillsCutoffDate();
