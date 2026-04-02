@@ -11,6 +11,7 @@ function saveData(file, data) {
 }
 
 const responseToObjects = (res) => {
+  console.log(res);
   const jsData = JSON.parse(res.substring(47).slice(0, -2));
   let data = [];
   const columns = jsData.table.cols;
